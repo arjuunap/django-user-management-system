@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/adminpanel.css' %}">
+</head>
+
+<body>
+    <header class="header">
+        <h1 class='admin_panel'>Admin Panel</h1>
+    </header>
+
+    <nav class="navbar">
+        <form id="searchForm" action="{% url 'admin_panel' %}" method="post">
+              {% csrf_token %}
+            <input type="search" id="searchInput" placeholder="Search..." name="search">
+            <button type="submit">Search</button>
+        </form>
+        <div class="nav-buttons">
+            <a href="{% url 'add_user' %}"><button id="addBtn">Add</button></a>
+            <a href="{% url 'admin_logout' %}"><button id="logoutBtn">Logout</button></a>
+        </div>
+    </nav>
+
+    <main class="content">
+        {%for i in user%}
+        {% if i.username != 'admin123' and password != 'admin123'%}
+            <div class="user-card">
+            
+                <div class="user-details">
+                    <b>Name:</b>{{i.username}}<br>
+                    <b>Email:</b> {{i.email}}
+                </div>
+                <div class="user-actions">
+                    <a href="{% url 'update' i.id %}"><button class="btn-edit">Edit</button></a>
+                    <a href="{% url 'delete' i.id %}"><button class="btn-delete">Delete</button></a>
+                </div>
+                
+            </div>
+        {% endif %}
+        {% endfor %}
+
+ 
+  
+</body>
+
+</html>
